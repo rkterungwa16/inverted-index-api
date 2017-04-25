@@ -18,5 +18,15 @@
   "bugs": {
     "url": "https://github.com/rkterungwa16/inverted-index-api/issues"
   },
-  "homepage": "https://github.com/rkterungwa16/inverted-index-api#readme"
+  "homepage": "https://github.com/rkterungwa16/inverted-index-api#readme",
+  "dependencies": {
+    "dotenv": "^4.0.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-coverage": "^0.3.38",
+    "gulp-jasmine-node": "^1.0.7",
+    "gulp-serve": "^1.4.0",
+    "supertest": "^3.0.0"
+  }
 }
