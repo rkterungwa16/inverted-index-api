@@ -23,6 +23,11 @@
     "dotenv": "^4.0.0"
   },
   "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
     "gulp": "^3.9.1",
     "gulp-coverage": "^0.3.38",
     "gulp-jasmine-node": "^1.0.7",
