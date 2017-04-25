@@ -1,0 +1,22 @@
+{
+  "name": "inverted-index-api",
+  "version": "0.0.1",
+  "description": "Efficient search functionality for software applications",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rkterungwa16/inverted-index-api.git"
+  },
+  "keywords": [
+    "Search"
+  ],
+  "author": "Richard Terungwa Kombol",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rkterungwa16/inverted-index-api/issues"
+  },
+  "homepage": "https://github.com/rkterungwa16/inverted-index-api#readme"
+}
