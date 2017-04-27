@@ -30,7 +30,9 @@
     "eslint-plugin-react": "^6.10.3",
     "gulp": "^3.9.1",
     "gulp-coverage": "^0.3.38",
+    "gulp-istanbul-report": "0.0.1",
     "gulp-jasmine-node": "^1.0.7",
+    "gulp-jasmine-phantom": "^3.0.0",
     "gulp-nodemon": "^2.2.1",
     "gulp-serve": "^1.4.0",
     "supertest": "^3.0.0"
