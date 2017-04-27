@@ -1,5 +1,8 @@
 # Inverted-Index-Api
 
+[![Build Status](https://travis-ci.org/rkterungwa16/inverted-index-api)](https://travis-ci.org/rkterungwa16/inverted-index-api)
+[![Coverage Status](https://coveralls.io/github/rkterungwa16/inverted-index-api)](https://coveralls.io/github/rkterungwa16/inverted-index-api)
+
 ## Introduction
 *  **`inverted-index-api`** is an App powered by Node.js.
 *  It has the following features;
@@ -33,7 +36,7 @@
 *  Install the app's front end dependencies using ..
 `
 * Run the app
-  *  `npm start`
+  *  `gulp serve`
   *  Running the command above will produce output that's similar to the sample below.
 
   ```
@@ -43,5 +46,6 @@
 *  The tests have been written using **[Jasmine-node](https://github.com/mhevery/jasmine-node/)**.
 *  They are run using the **`coverage`** tool in order to generate test coverage reports.
 *  To run the tests
+   * `gulp run-tests`
 
 
