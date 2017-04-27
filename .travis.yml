@@ -1,6 +1,16 @@
 language: node_js
 node_js:
-  - "iojs"
   - "4"
+install:
+  - npm install coveralls
+before_script:
+  - npm install -g gulp
+script: 
+  - gulp run-tests
+after_success:
+  - coveralls
+branches:
+  only:
+    - project-setup
 
-script: gulp run-tests
+
