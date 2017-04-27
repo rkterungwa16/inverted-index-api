@@ -6,6 +6,7 @@ const nodemon = require('gulp-nodemon');
 const jasmineNode = require('gulp-jasmine-node');
 const jasminePhantomJS = require('gulp-jasmine-phantom');
 const istanbulReport = require('gulp-istanbul-report');
+const coveralls = require('gulp-coveralls');
 
 const coverageFile = 'coverage/coverage.json';
 
@@ -47,6 +48,6 @@ gulp.task('coverage', () => {
           }))
           .pipe(jasmineNode())
           .pipe(coverage.gather())
-          .pipe(coverage.format())
-          .pipe(gulp.dest('fixtures'));
+          .pipe(coverage.format({ report: 'lcov' }))
+          .pipe(coveralls());
 });
