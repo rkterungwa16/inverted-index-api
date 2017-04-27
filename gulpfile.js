@@ -26,7 +26,7 @@ gulp.task('serve', () => {
   })
 });
 
-gulp.task('test', function () {
+gulp.task('coveralls', function () {
   gulp.src(['tests/inverted-index-testSpec.js'])
     .pipe(jasminePhantomJS(jasminePhantomOpts))
     .on('finish', function() {

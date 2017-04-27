@@ -4,7 +4,9 @@
   "description": "Efficient search functionality for software applications",
   "main": "index.js",
   "scripts": {
-    "test": "gulp run-tests"
+    "test": "istanbul cover node_modules/jasmine/bin/jasmine.js tests/inverted-index-testSpec.js",
+    "coverage": "gulp coverage",
+    "coveralls": "gulp coveralls"
   },
   "repository": {
     "type": "git",
@@ -20,6 +22,7 @@
   },
   "homepage": "https://github.com/rkterungwa16/inverted-index-api#readme",
   "dependencies": {
+    "coveralls": "^2.13.0",
     "dotenv": "^4.0.0"
   },
   "devDependencies": {
@@ -38,6 +41,7 @@
     "gulp-jasmine-phantom": "^3.0.0",
     "gulp-nodemon": "^2.2.1",
     "gulp-serve": "^1.4.0",
+    "jasmine": "^2.6.0",
     "supertest": "^3.0.0"
   }
 }
