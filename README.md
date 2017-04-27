@@ -1,7 +1,7 @@
 # Inverted-Index-Api
 
 [![Build Status](https://travis-ci.org/rkterungwa16/inverted-index-api.svg?branch=project-setup)](https://travis-ci.org/rkterungwa16/inverted-index-api.svg?branch=project-setup)
-[![Coverage Status](https://coveralls.io/repos/github/rkterungwa16/inverted-index-api/badge.svg)](https://coveralls.io/github/rkterungwa16/inverted-index-api)
+[![Coverage Status](https://coveralls.io/repos/github/rkterungwa16/inverted-index-api/badge.svg?branch=project-setup)](https://coveralls.io/github/rkterungwa16/inverted-index-api?branch=project-setup)
 
 ## Introduction
 *  **`inverted-index-api`** is an App powered by Node.js.
