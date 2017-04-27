@@ -1,7 +1,6 @@
 const http = require('http');
 const dotenv = require('dotenv').config({path: '.env.example'});
 const fs = require('fs');
-const port = 9000;
 
 http.createServer((req, res) => {
 	res.writeHead(200, {'Content-Type': 'text/plain'});
