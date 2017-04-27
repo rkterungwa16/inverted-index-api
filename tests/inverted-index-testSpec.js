@@ -1,5 +1,4 @@
 'use strict'
-var jasmine = require('jasmine');
 var myApp = require('../src/inverted-index.js');
 
 describe('Sum()', function() {    
