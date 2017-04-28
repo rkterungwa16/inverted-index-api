@@ -4,7 +4,8 @@
   "description": "Efficient search functionality for software applications",
   "main": "index.js",
   "scripts": {
-    "test": "gulp run-tests && gulp coveralls"
+    "start": "gulp serve",
+    "test": "gulp run-tests && gulp coveralls && istanbul cover node_modules/jasmine/bin/jasmine.js tests/inverted-index-testSpec.js"
   },
   "repository": {
     "type": "git",

@@ -23,9 +23,10 @@ gulp.task('serve', () => {
     script: 'server.js',
     ext: 'js html', 
     env: { 'NODE_ENV': process.env.NODE_ENV }
-  })
+  });
 });
 
+// Task to generate coverage report
 gulp.task('test', () => {
   gulp.src(['tests/inverted-index-testSpec.js'])
     .pipe(jasminePhantomJS(jasminePhantomOpts))
@@ -35,6 +36,7 @@ gulp.task('test', () => {
     });
 });
 
+// Task to run tests 
 gulp.task('run-tests', () => {
     return gulp.src(['tests/inverted-index-testSpec.js'])
     .pipe(jasmineNode());
@@ -52,12 +54,13 @@ gulp.task('coverage', () => {
           .pipe(coveralls());
 });
 
+// Task to load code coverage to coveralls
 gulp.task('coveralls', ['test'], () => {
   // If not running on CI environment it won't send lcov.info to coveralls
   if (!process.env.CI) {
     return;
   }
-  
+
   return gulp.src('coverage/lcov.info')
     .pipe(coveralls());
 });
