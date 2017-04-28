@@ -26,7 +26,7 @@ gulp.task('serve', () => {
   })
 });
 
-gulp.task('coveralls', function () {
+gulp.task('test', () => {
   gulp.src(['tests/inverted-index-testSpec.js'])
     .pipe(jasminePhantomJS(jasminePhantomOpts))
     .on('finish', function() {
@@ -50,4 +50,14 @@ gulp.task('coverage', () => {
           .pipe(coverage.gather())
           .pipe(coverage.format({ report: 'lcov' }))
           .pipe(coveralls());
+});
+
+gulp.task('coveralls', ['test'], () => {
+  // If not running on CI environment it won't send lcov.info to coveralls
+  if (!process.env.CI) {
+    return;
+  }
+  
+  return gulp.src('coverage/lcov.info')
+    .pipe(coveralls());
 });
