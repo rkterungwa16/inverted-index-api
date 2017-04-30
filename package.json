@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/rkterungwa16/inverted-index-api#readme",
   "dependencies": {
+    "babel-register": "^6.24.1",
     "coveralls": "^2.13.0",
     "dotenv": "^4.0.0"
   },
