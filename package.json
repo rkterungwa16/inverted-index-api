@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "gulp serve",
-    "test": "gulp run-tests && gulp coveralls && istanbul cover node_modules/jasmine/bin/jasmine.js tests/inverted-index-testSpec.js"
+    "test": "gulp run-tests && gulp coveralls && gulp coverage"
   },
   "repository": {
     "type": "git",
@@ -37,8 +37,11 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.9.0",
     "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-babel-istanbul": "^1.6.0",
     "gulp-coverage": "^0.3.38",
     "gulp-coveralls": "^0.1.4",
+    "gulp-inject-modules": "^1.0.0",
     "gulp-istanbul-report": "0.0.1",
     "gulp-jasmine-node": "^1.0.7",
     "gulp-nodemon": "^2.2.1",

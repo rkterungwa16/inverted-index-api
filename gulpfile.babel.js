@@ -7,8 +7,9 @@ import nodemon from 'gulp-nodemon';
 import jasmineNode from 'gulp-jasmine-node';
 import istanbulReport from 'gulp-istanbul-report';
 import coveralls from 'gulp-coveralls';
-
-import coverageFile from './coverage/coverage.json';
+import babel from 'gulp-babel';
+import istanbul from 'gulp-babel-istanbul';
+import injectModules from 'gulp-inject-modules';
 
 // Run app server
 gulp.task('serve', () => 
@@ -21,7 +22,7 @@ gulp.task('serve', () =>
 
 // Generate coverage report
 gulp.task('test', () => 
-  gulp.src(coverageFile)
+  gulp.src('./coverage/coverage.json')
     .pipe(istanbulReport())
 );
 
@@ -32,15 +33,19 @@ gulp.task('run-tests', () => {
 });
 
 // Generate coverage report
-gulp.task('coverage', () => {
-  return gulp.src('tests/inverted-index-testSpec.js')
-    .pipe(coverage.instrument({
-        pattern: ['src/inverted-index.js']
-    }))
-    .pipe(jasmineNode())
-    .pipe(coverage.gather())
-    .pipe(coverage.format({ report: 'lcov' }))
-    .pipe(coveralls())
+gulp.task('coverage', (cb) => {
+  gulp.src('src/inverted-index.js')
+    .pipe(istanbul())
+    .pipe(istanbul.hookRequire())
+    .on('finish', () => {
+      gulp.src('tests/inverted-index-testSpec.js')
+      .pipe(babel())
+      .pipe(injectModules())
+      .pipe(jasmineNode())
+      .pipe(istanbul.writeReports())
+      .pipe(istanbul.enforceThresholds({ thresholds: { global: 90 } }))
+      .on('end', cb);
+    })
 });
 
 // Load code coverage to coveralls
