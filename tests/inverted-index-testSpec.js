@@ -92,14 +92,14 @@ describe('Inverted index class', () => {
   });
 });
 
-describe('POST/api/createIndex', () => {
-  it('should respond with json', () => {
+describe('Sample unit test', () => {
+  it('should return home page', (done) => {
     supertest(app)
-    .post('/api/createIndex')
-    .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(200, (res) => {
-      done.fail()
+    .get('/')
+    .expect('Content-type', /json/)
+    .expect(200)
+    .end((err, res) => {
+      done();
     });
   });
 });
@@ -110,8 +110,22 @@ describe('POST/api/createIndex', () => {
     .post('/api/createIndex')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
-    .expect(200, (res) => {
-      done.fail()
+    .expect(200)
+    .end((err, res) => {
+      done();
+    });
+  });
+});
+
+describe('POST/api/createIndex', () => {
+  it('should respond with json', () => {
+    supertest(app)
+    .post('/api/createIndex')
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .end((err, res) => {
+      done();
     });
   });
 });
