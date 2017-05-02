@@ -3,3 +3,5 @@ node_js:
   - "4"
 before_script:
   - npm install -g istanbul
+after_success:
+  - gulp coverage coveralls
