@@ -42,7 +42,11 @@ gulp.task('coverage', (cb) => {
       .pipe(babel())
       .pipe(injectModules())
       .pipe(jasmineNode())
-      .pipe(istanbul.writeReports())
+      .pipe(istanbul.writeReports({
+        dir: './coverage',
+        reporters: ['lcov'],
+        reportOpts: { dir: './coverage' }
+      }))
       .pipe(istanbul.enforceThresholds({ thresholds: { global: 90 } }))
       .on('end', cb);
     })

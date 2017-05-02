@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "gulp serve",
-    "test": "gulp run-tests && gulp coveralls && gulp coverage"
+    "test": "gulp run-tests && gulp coverage"
   },
   "repository": {
     "type": "git",
