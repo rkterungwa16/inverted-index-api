@@ -44,7 +44,6 @@ gulp.task('coverage', (cb) => {
       .pipe(jasmineNode())
       .pipe(istanbul.writeReports())
       .pipe(istanbul.enforceThresholds({ thresholds: { global: 90 } }))
-      .pipe(coveralls());
       .on('end', cb);
     })
 });
