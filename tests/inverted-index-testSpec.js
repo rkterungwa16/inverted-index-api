@@ -1,8 +1,13 @@
 import fs from 'fs';
+import supertest from 'supertest';
+import dotenv from 'dotenv';
 import myApp from '../src/inverted-index';
+import app from '../index.js';
 
+dotenv.config({ path: '.env.example' });
 const fileName = 'book.txt';
 const jsonOfFile = new myApp(fileName);
+const server = supertest.agent('process.env.PORT_DEV');
 
 const indexSample = {
   an: [0],
@@ -83,6 +88,30 @@ describe('Inverted index class', () => {
 
     it("Should return { 'third world': [1] } for searchIndex(index, fileName, 'Third', 'World')", () => {
       expect(jsonOfFile.searchIndex(index, fileName, 'Third', 'World')).toEqual({ 'third world': [1] });
+    });
+  });
+});
+
+describe('POST/api/createIndex', () => {
+  it('should respond with json', () => {
+    supertest(app)
+    .post('/api/createIndex')
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+    .expect(200, (res) => {
+      done.fail()
+    });
+  });
+});
+
+describe('POST/api/createIndex', () => {
+  it('should respond with json', () => {
+    supertest(app)
+    .post('/api/createIndex')
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+    .expect(200, (res) => {
+      done.fail()
     });
   });
 });
