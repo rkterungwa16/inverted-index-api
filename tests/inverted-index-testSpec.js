@@ -1,22 +1,25 @@
 import fs from 'fs';
 import myApp from '../src/inverted-index';
 
-const fileName = 'book.json';
-const fileContent = JSON.parse(fs.readFileSync('fixtures/book.json'));
-const jsonOfFile = new myApp(fileName, fileContent);
+//const fileContent = JSON.parse(fs.readFileSync('fixtures/book.json'));
+//const empFileContent = JSON.parse(fs.readFileSync('fixtures/empty.json'));
+const jsonOfFile = new myApp('book.json');
+const emptyJson = new myApp('empty.json');
+const invalidJson = new myApp('invalid.json');
+const malformedJson = new myApp('malformed');
 
 describe('Inverted index class', () => {
   describe('Read book data', () => {
     it("Should return 'invalid json' for fileContent = 'file content'", () => {
-      expect(jsonOfFile.__getJson()).toEqual('invalid json');
+      expect(invalidJson.__getJson()).toEqual('invalid json');
     });
 
     it("Should return 'empty json' for fileContent = ''", () => {
-      expect(jsonOfFile.__getJson()).toEqual('empty json');
+      expect(emptyJson.__getJson()).toEqual([{}]);
     });
 
-    it("Should return 'malformed json' for fileContent = '[{ title: 'A' text: 'B' }]", () => {
-      expect(jsonOfFile.__getJson()).toEqual('malformed json');
+    it("Should return 'malformed json' for fileContent of format '[{ title: 'A' text: 'B' }]", () => {
+      expect(malformedJson.__getJson()).toEqual('malformed json');
     });
 
     it("Should return a valid file content with the format [{ 'title': 'A', 'text': 'B' }]", () => {
@@ -36,24 +39,12 @@ describe('Inverted index class', () => {
 
   describe('Populate index', () => {
     it("Should return 'object' for typeof jsonOfFile.createIndex('fileName', 'fileContent')", () => {
-      expect(typeof jsonOfFile.createIndex(fileName, fileContent)).toEqual('object');
-    });
-
-    it("Should return 'empty json' for fileContent = ''", () => {
-      expect(index[fileName]).toEqual({ a: [1, 2] });
-    });
-
-    it("Should return 'malformed json' for fileContent = '[{ title: 'A' text: 'B' }]", () => {
-      expect(jsonOfFile.getJson).toEqual('malformed json');
-    });
-
-    it("Should return ''[{ 'title': 'A', 'text': 'B' }]'' for fileContent = '[{ 'title': 'A', 'text': 'B' }]'", () => {
-      expect(jsonOfFile.getJson).toEqual([{ title: 'A', text: 'B' }]);
+      expect(typeof jsonOfFile.createIndex()).toEqual('object');
     });
   });
 
   describe('Populate index', () => {
-    it("Should return 'object' for typeof jsonOfFile.createIndex('fileName', 'fileContent')", () => {
+    it("Should return 'object' for typeof jsonOfFile.createIndex()", () => {
       expect(typeof jsonOfFile.createIndex()).toEqual('object');
     });
 
@@ -87,7 +78,8 @@ describe('Inverted index class', () => {
           });
 
     it("Should return a valid output for createIndex().fileName", () => {
-      expect(createIndex.fileName).toEqual(
+      let index = jsonOfFile.createIndex();
+      expect(index.fileName).toEqual(
         {  An: [ 0 ],
            inquiry: [ 0 ],
            into: [ 0 ],
@@ -116,7 +108,7 @@ describe('Inverted index class', () => {
 
   describe('Search index', () => {
     it("Should return 'object' for typeof jsonOfFile.createIndex(fileName, fileContent)", () => {
-      expect(typeof jsonOfFile.createIndex()).toEqual('object');
+      expect(typeof jsonOfFile.searchIndex('a')).toEqual('object');
     });
 
     it("Should return { 'third world': [1] } for searchIndex(index, filename, 'Third World')", () => {
@@ -132,4 +124,3 @@ describe('Inverted index class', () => {
     });
   });
 });
-

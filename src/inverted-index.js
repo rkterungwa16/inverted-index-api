@@ -7,10 +7,10 @@ class invertedIndex {
   /**
   * Initializes the Class with the required file name
   */
-  constructor(fileName, fileContent) {
+  constructor(fileName) {
     // assign the file name to object property
     this.fileName = fileName;
-    this.fileContent = fileContent;
+    this.fileContent;
   }
 
   /**
@@ -19,7 +19,16 @@ class invertedIndex {
   */
   __getJson() {
     // Return a valid json array
-    return this.fileContent;
+    try {
+      this.fileContent = JSON.parse(fs.readFileSync( 'fixtures/' + this.fileName));
+      return this.fileContent;
+    } catch (e) {
+      if (e.message === 'Unexpected end of JSON input') {
+        return ('invalid json');
+      } else {
+          return ('malformed json');
+      }   
+    }
   }
   
   /**
