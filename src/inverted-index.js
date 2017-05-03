@@ -1,3 +1,5 @@
+import fs from 'fs';
+
 /**
 * Creates an index from an array
 * Allows a user to search text blocks in the array that contain a specified collection
@@ -7,7 +9,7 @@ class invertedIndex {
   /**
   * Initializes the Class with the required file name
   */
-  constructor(fileName) {
+  constructor(fileName, fileContent) {
     // assign the file name to object property
     this.fileName = fileName;
     this.fileContent;
@@ -20,7 +22,7 @@ class invertedIndex {
   __getJson() {
     // Return a valid json array
     try {
-      this.fileContent = JSON.parse(fs.readFileSync( 'fixtures/' + this.fileName));
+      this.fileContent = JSON.parse(fs.readFileSync('fixtures/' + this.fileName));
       return this.fileContent;
     } catch (e) {
       if (e.message === 'Unexpected end of JSON input') {
@@ -98,10 +100,44 @@ class invertedIndex {
   * @returns {object} an object of the search results
   */
   searchIndex(terms) {
-    // use index from createIndex to search terms
-    const newterms = terms;
-    const fileName = this.fileName;
-    this.createIndex();
+    let word = '';
+    let indexNum = [];
+    let newNum = [];
+    let indexObj = this.createIndex();
+    let searchResult = {};
+    let indexarr;
+    
+    Array.isArray([]);
+    if (arguments.length > 1) {
+      indexarr = arguments;
+    }
+    else if (Array.isArray(terms)) {
+      indexarr = terms;
+    } else if (typeof terms === 'string') {
+      indexarr = terms.split(' ');
+    } else {
+      return 'invalid search term';
+    }
+    // Check for word in index object 
+    for (let s=0; s<indexarr.length; s++) {
+      // Collect words and index number
+      if (indexarr[s] in indexObj[this.fileName]) {
+         word = word + indexarr[s] + ' ';
+        indexNum = indexNum + indexObj['book.json'][indexarr[s]];
+      }
+
+    }
+    if (indexNum === undefined) {
+      return 'Terms do not exist in document';
+    }
+    indexNum = indexNum.split('');
+    for (let z=0; z<indexNum.length; z++) {
+      indexNum[z] = parseInt(indexNum[z]);
+      this.__addUniqueWords(indexNum[z], newNum);
+    }
+    
+    searchResult[word] = newNum;
+    return searchResult;
   }
 }
 

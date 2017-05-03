@@ -38,12 +38,6 @@ describe('Inverted index class', () => {
   });
 
   describe('Populate index', () => {
-    it("Should return 'object' for typeof jsonOfFile.createIndex('fileName', 'fileContent')", () => {
-      expect(typeof jsonOfFile.createIndex()).toEqual('object');
-    });
-  });
-
-  describe('Populate index', () => {
     it("Should return 'object' for typeof jsonOfFile.createIndex()", () => {
       expect(typeof jsonOfFile.createIndex()).toEqual('object');
     });
@@ -75,11 +69,11 @@ describe('Inverted index class', () => {
              also: [ 1 ] 
           } 
         });
-          });
+    });
 
     it("Should return a valid output for createIndex().fileName", () => {
       let index = jsonOfFile.createIndex();
-      expect(index.fileName).toEqual(
+      expect(index['book.json']).toEqual(
         {  An: [ 0 ],
            inquiry: [ 0 ],
            into: [ 0 ],
@@ -108,19 +102,19 @@ describe('Inverted index class', () => {
 
   describe('Search index', () => {
     it("Should return 'object' for typeof jsonOfFile.createIndex(fileName, fileContent)", () => {
-      expect(typeof jsonOfFile.searchIndex('a')).toEqual('object');
+      expect(typeof jsonOfFile.searchIndex('An')).toEqual('object');
     });
 
     it("Should return { 'third world': [1] } for searchIndex(index, filename, 'Third World')", () => {
-      expect(jsonOfFile.searchIndex()).toEqual({ 'third world': [1] });
+      expect(jsonOfFile.searchIndex('third world')).toEqual({ 'third world ': [1] });
     });
 
     it("Should return { 'third world': [1] } for searchIndex(index, fileName, ['Third', 'World'])", () => {
-      expect(jsonOfFile.searchIndex(['Third', 'World'])).toEqual({ 'third world': [1] });
+      expect(jsonOfFile.searchIndex(['third', 'world'])).toEqual({ 'third world ': [1] });
     });
 
     it("Should return { 'third world': [1] } for searchIndex(index, fileName, 'Third', 'World')", () => {
-      expect(jsonOfFile.searchIndex('Third', 'World')).toEqual({ 'third world': [1] });
+      expect(jsonOfFile.searchIndex('third', 'world')).toEqual({ 'third world ': [1] });
     });
   });
 });
