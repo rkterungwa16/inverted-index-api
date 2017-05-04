@@ -23,7 +23,7 @@ const apiUrls = (url) => {
 
 http.createServer((req, res) => {
   //fs.createReadStream(file).pipe(res);
-  if (req.method === 'GET') {
+  if (req.method === 'POST') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     Url = url.parse(req.url, true);
     res.end(JSON.stringify(apiUrls(Url)));
