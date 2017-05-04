@@ -6,17 +6,22 @@ import myApp from '../src/inverted-index';
 const jsonOfFile = new myApp('book.json');
 const emptyJson = new myApp('empty.json');
 const invalidJson = new myApp('invalid.json');
-const malformedJson = new myApp('malformed');
+const malformedJson = new myApp('malformed.json');
+const malformed1Json = new myApp('malformed1.json');
 
 describe('Inverted index class', () => {
   describe('Read book data', () => {
-    it("Should return 'invalid json' for fileContent = 'file content'", () => {
+    it("Should return 'invalid json' for fileContent = ''", () => {
       expect(invalidJson.__getJson()).toEqual('invalid json');
     });
 
     it("Should return 'empty json' for fileContent = ''", () => {
       expect(emptyJson.__getJson()).toEqual([{}]);
     });
+
+    it('Should return "malformed json" for fileContent ="Hello world!"', () => {
+      expect(malformed1Json.__getJson()).toEqual('malformed json');
+    })
 
     it("Should return 'malformed json' for fileContent of format '[{ title: 'A' text: 'B' }]", () => {
       expect(malformedJson.__getJson()).toEqual('malformed json');

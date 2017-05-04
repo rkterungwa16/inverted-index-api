@@ -5,7 +5,7 @@ import fs from 'fs';
 * Allows a user to search text blocks in the array that contain a specified collection
 * of words
 */
-class invertedIndex {
+export default class invertedIndex {
   /**
   * Initializes the Class with the required file name
   */
@@ -144,5 +144,3 @@ class invertedIndex {
     return searchResult;
   }
 }
-
-module.exports = invertedIndex;
