@@ -105,16 +105,32 @@ describe('Inverted index class', () => {
       expect(typeof jsonOfFile.searchIndex('An')).toEqual('object');
     });
 
-    it("Should return { 'third world': [1] } for searchIndex(index, filename, 'Third World')", () => {
+    it("Should return { 'third world': [1] } for searchIndex('Third World')", () => {
       expect(jsonOfFile.searchIndex('third world')).toEqual({ 'third world ': [1] });
     });
 
-    it("Should return { 'third world': [1] } for searchIndex(index, fileName, ['Third', 'World'])", () => {
+    it("Should return { 'third world': [1] } for searchIndex(['Third', 'World'])", () => {
       expect(jsonOfFile.searchIndex(['third', 'world'])).toEqual({ 'third world ': [1] });
     });
 
-    it("Should return { 'third world': [1] } for searchIndex(index, fileName, 'Third', 'World')", () => {
+    it("Should return { 'third world': [1] } for searchIndex('Third', 'World')", () => {
       expect(jsonOfFile.searchIndex('third', 'world')).toEqual({ 'third world ': [1] });
+    });
+
+    it('Should return "Search term(s) is not in document" for searchIndex("zod")', () => {
+      expect(jsonOfFile.searchIndex('zod')).toEqual('Search term(s) is not in document');
+    });
+
+    it('Should return { "world": [1] } for searchIndex("zod world")', () => {
+      expect(jsonOfFile.searchIndex('zod world')).toEqual({ 'world ': [1] });
+    });
+
+    it('Should return "Search terms(s) is not in document" for searchIndex("planet crypton")', () => {
+      expect(jsonOfFile.searchIndex('planet crypton')).toEqual('Search term(s) is not in document');
+    });
+
+    it('Should return { "world": [1] } for searchIndex("world..")', () => {
+      expect(jsonOfFile.searchIndex('world..')).toEqual({ 'world ': [1] });
     });
   });
 });

@@ -107,7 +107,6 @@ class invertedIndex {
     let searchResult = {};
     let indexarr;
     
-    Array.isArray([]);
     if (arguments.length > 1) {
       indexarr = arguments;
     }
@@ -120,16 +119,21 @@ class invertedIndex {
     }
     // Check for word in index object 
     for (let s=0; s<indexarr.length; s++) {
+      // Remove any character not alphanumeric
+      indexarr[s] = indexarr[s].replace(/([^\w]+)/g, '');
       // Collect words and index number
       if (indexarr[s] in indexObj[this.fileName]) {
-         word = word + indexarr[s] + ' ';
+        word = word + indexarr[s] + ' ';
         indexNum = indexNum + indexObj['book.json'][indexarr[s]];
+      } else {
+        continue;
       }
+    }
 
+    if (indexNum.length === 0) {
+      return 'Search term(s) is not in document';
     }
-    if (indexNum === undefined) {
-      return 'Terms do not exist in document';
-    }
+
     indexNum = indexNum.split('');
     for (let z=0; z<indexNum.length; z++) {
       indexNum[z] = parseInt(indexNum[z]);
