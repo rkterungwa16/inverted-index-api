@@ -15,7 +15,7 @@ describe('Inverted index class', () => {
       expect(invalidJson.__getJson()).toEqual('invalid json');
     });
 
-    it("Should return 'empty json' for fileContent = ''", () => {
+    it("Should return '[{}]' for fileContent = '[{}]'", () => {
       expect(emptyJson.__getJson()).toEqual([{}]);
     });
 
