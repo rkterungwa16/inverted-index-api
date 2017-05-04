@@ -8,7 +8,7 @@ dotenv.config({ path: '.env.example' });
 
 const file = 'fixtures/book.json';
 const jsonOfFile = new myApp('book.json');
-const term = 'third world';
+const term = ['An', 'world'];
 let Url;
 
 const apiUrls = (url) => {

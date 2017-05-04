@@ -1,34 +1,33 @@
 import fs from 'fs';
 import myApp from '../src/inverted-index';
 
-//const fileContent = JSON.parse(fs.readFileSync('fixtures/book.json'));
-//const empFileContent = JSON.parse(fs.readFileSync('fixtures/empty.json'));
 const jsonOfFile = new myApp('book.json');
 const emptyJson = new myApp('empty.json');
 const invalidJson = new myApp('invalid.json');
 const malformedJson = new myApp('malformed.json');
 const malformed1Json = new myApp('malformed1.json');
+const validJson = new myApp('bookone.json');
 
 describe('Inverted index class', () => {
   describe('Read book data', () => {
     it("Should return 'invalid json' for fileContent = ''", () => {
-      expect(invalidJson.__getJson()).toEqual('invalid json');
+      expect(invalidJson.getJson()).toEqual('invalid json');
     });
 
     it("Should return '[{}]' for fileContent = '[{}]'", () => {
-      expect(emptyJson.__getJson()).toEqual([{}]);
+      expect(emptyJson.getJson()).toEqual([{}]);
     });
 
     it('Should return "malformed json" for fileContent ="Hello world!"', () => {
-      expect(malformed1Json.__getJson()).toEqual('malformed json');
+      expect(malformed1Json.getJson()).toEqual('malformed json');
     })
 
     it("Should return 'malformed json' for fileContent of format '[{ title: 'A' text: 'B' }]", () => {
-      expect(malformedJson.__getJson()).toEqual('malformed json');
+      expect(malformedJson.getJson()).toEqual('malformed json');
     });
 
     it("Should return a valid file content with the format [{ 'title': 'A', 'text': 'B' }]", () => {
-      expect(jsonOfFile.__getJson()).toEqual([
+      expect(jsonOfFile.getJson()).toEqual([
         {
           "title":"An inquiry into the wealth of nations",
 
@@ -50,14 +49,14 @@ describe('Inverted index class', () => {
     it('Should return indexSample for createIndex()', () => {
       expect(jsonOfFile.createIndex()).toEqual(
         { 'book.json': 
-          {  An: [ 0 ],
+          {  an: [ 0 ],
              inquiry: [ 0 ],
              into: [ 0 ],
              the: [ 0, 1 ],
              wealth: [ 0 ],
              of: [ 0 ],
              nations: [ 0 ],
-             This: [ 0, 1 ],
+             this: [ 0, 1 ],
              string: [ 0, 1 ],
              seeks: [ 0 ],
              to: [ 0, 1 ],
@@ -66,7 +65,7 @@ describe('Inverted index class', () => {
              understand: [ 0, 1 ],
              problem: [ 0, 1 ],
              set: [ 0, 1 ],
-             From: [ 1 ],
+             from: [ 1 ],
              third: [ 1 ],
              world: [ 1 ],
              first: [ 1 ],
@@ -79,14 +78,14 @@ describe('Inverted index class', () => {
     it("Should return a valid output for createIndex().fileName", () => {
       let index = jsonOfFile.createIndex();
       expect(index['book.json']).toEqual(
-        {  An: [ 0 ],
+        {  an: [ 0 ],
            inquiry: [ 0 ],
            into: [ 0 ],
            the: [ 0, 1 ],
            wealth: [ 0 ],
            of: [ 0 ],
            nations: [ 0 ],
-           This: [ 0, 1 ],
+           this: [ 0, 1 ],
            string: [ 0, 1 ],
            seeks: [ 0 ],
            to: [ 0, 1 ],
@@ -95,14 +94,28 @@ describe('Inverted index class', () => {
            understand: [ 0, 1 ],
            problem: [ 0, 1 ],
            set: [ 0, 1 ],
-           From: [ 1 ],
+           from: [ 1 ],
            third: [ 1 ],
            world: [ 1 ],
            first: [ 1 ],
            is: [ 1 ],
            also: [ 1 ] 
         });
-    });
+      });
+
+    it('Should return valid output for createIndex()[fileName]', () => {
+      expect(validJson.createIndex()['bookone.json']).toEqual(
+        {  what: [0],
+           who: [0],
+           gave: [0],
+           you: [0],
+           that: [0],
+           planet: [1],
+           crypton: [1],
+           super: [1],
+           man: [1]
+        });
+      });
   });
 
   describe('Search index', () => {
@@ -136,6 +149,14 @@ describe('Inverted index class', () => {
 
     it('Should return { "world": [1] } for searchIndex("world..")', () => {
       expect(jsonOfFile.searchIndex('world..')).toEqual({ 'world ': [1] });
+    });
+
+    it('Should return {"world": [1]} for searchIndex("WoRld")', () => {
+      expect(jsonOfFile.searchIndex('WoRld')).toEqual({ 'world ': [1] });
+    })
+
+    it('Should return {"what": [1]} for searchIndex("what")', () => {
+      expect(validJson.searchIndex('what')).toEqual({ 'what ': [ 0 ] });
     });
   });
 });
