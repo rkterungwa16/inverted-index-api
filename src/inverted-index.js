@@ -21,7 +21,6 @@ export default class invertedIndex {
   * @returns {object} a JSON array
   */
   getJson() {
-    // Return a valid json array
     try {
       this.fileContent = JSON.parse(fs.readFileSync(`fixtures/${this.fileName}`));
       return this.fileContent;

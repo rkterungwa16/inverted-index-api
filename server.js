@@ -21,7 +21,7 @@ const apiUrls = (url) => {
   }
 };
 
-http.createServer((req, res) => {
+const server = http.createServer((req, res) => {
   //fs.createReadStream(file).pipe(res);
   if (req.method === 'POST') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -31,6 +31,10 @@ http.createServer((req, res) => {
     res.writeHead(405);
     res.end();
   }
-}).listen(process.env.PORT_DEV, () => {
+});
+
+server.listen(process.env.PORT_DEV, () => {
   console.log('Server listening on', process.env.PORT_DEV);
 });
+
+module.exports = server;

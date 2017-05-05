@@ -21,10 +21,11 @@ gulp.task('serve', () =>
 );
 
 // Generate coverage report
-gulp.task('test', () => 
-  gulp.src('./coverage/coverage.json')
-    .pipe(istanbulReport())
-);
+gulp.task('test', () => {
+  gulp.src('./tests/api-testSpec.js')
+    .pipe(babel())
+    .pipe(jasmineNode())
+});
 
 // Run tests 
 gulp.task('run-tests', () => {
@@ -55,6 +56,6 @@ gulp.task('coveralls', ['test'], () => {
     return;
   }
 
-  return gulp.src('coverage/lcov.info')
+  return gulp.src('server.js')
     .pipe(coveralls())
 });
