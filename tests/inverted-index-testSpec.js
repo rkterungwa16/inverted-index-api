@@ -124,15 +124,15 @@ describe('Inverted index class', () => {
     });
 
     it("Should return { 'third world': [1] } for searchIndex('Third World')", () => {
-      expect(jsonOfFile.searchIndex('third world')).toEqual({ 'third world ': [1] });
+      expect(jsonOfFile.searchIndex('third world')).toEqual({ 'third world': [1] });
     });
 
     it("Should return { 'third world': [1] } for searchIndex(['Third', 'World'])", () => {
-      expect(jsonOfFile.searchIndex(['third', 'world'])).toEqual({ 'third world ': [1] });
+      expect(jsonOfFile.searchIndex(['third', 'world'])).toEqual({ 'third world': [1] });
     });
 
     it("Should return { 'third world': [1] } for searchIndex('Third', 'World')", () => {
-      expect(jsonOfFile.searchIndex('third', 'world')).toEqual({ 'third world ': [1] });
+      expect(jsonOfFile.searchIndex('third', 'world')).toEqual({ 'third world': [1] });
     });
 
     it('Should return "Search term(s) is not in document" for searchIndex("zod")', () => {
@@ -140,7 +140,7 @@ describe('Inverted index class', () => {
     });
 
     it('Should return { "world": [1] } for searchIndex("zod world")', () => {
-      expect(jsonOfFile.searchIndex('zod world')).toEqual({ 'world ': [1] });
+      expect(jsonOfFile.searchIndex('zod world')).toEqual({ 'world': [1] });
     });
 
     it('Should return "Search terms(s) is not in document" for searchIndex("planet crypton")', () => {
@@ -148,15 +148,15 @@ describe('Inverted index class', () => {
     });
 
     it('Should return { "world": [1] } for searchIndex("world..")', () => {
-      expect(jsonOfFile.searchIndex('world..')).toEqual({ 'world ': [1] });
+      expect(jsonOfFile.searchIndex('world..')).toEqual({ 'world': [1] });
     });
 
     it('Should return {"world": [1]} for searchIndex("WoRld")', () => {
-      expect(jsonOfFile.searchIndex('WoRld')).toEqual({ 'world ': [1] });
+      expect(jsonOfFile.searchIndex('WoRld')).toEqual({ 'world': [1] });
     })
 
     it('Should return {"what": [1]} for searchIndex("what")', () => {
-      expect(validJson.searchIndex('what')).toEqual({ 'what ': [ 0 ] });
+      expect(validJson.searchIndex('what')).toEqual({ 'what': [ 0 ] });
     });
   });
 });

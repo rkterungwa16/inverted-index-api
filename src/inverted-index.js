@@ -133,6 +133,8 @@ export default class invertedIndex {
     if (indexNum.length === 0) {
       return 'Search term(s) is not in document';
     }
+    // Remove trailing spaces
+    word = word.split('').slice(0, word.length-1).join('');
     // Collect unique index numbers in array
     indexNum = indexNum.split('');
     for (let z = 0; z < indexNum.length; z += 1) {
