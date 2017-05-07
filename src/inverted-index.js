@@ -13,7 +13,7 @@ export default class invertedIndex {
   constructor(fileName) {
     // assign the file name to object property
     this.fileName = fileName;
-    this.fileContent = {};
+    this.fileContentArr = [];
   }
 
   /**
@@ -21,16 +21,24 @@ export default class invertedIndex {
   * @returns {object} a JSON array
   */
   getJson() {
-    try {
-      this.fileContent = JSON.parse(fs.readFileSync(`fixtures/${this.fileName}`));
-      return this.fileContent;
-    } catch (e) {
-      if (e.message === 'Unexpected end of JSON input') {
-        return ('invalid json');
-      } else {
-          return 'malformed json';
-      }   
+    if (Array.isArray(this.fileName)) {
+      this.fileName = this.fileName;
+    } else {
+      this.fileName = this.fileName.split(' ');
     }
+    for (let i = 0; i < this.fileName.length; i += 1) {
+      try {
+        let fileContent = JSON.parse(fs.readFileSync(`fixtures/${this.fileName[i]}`));
+        this.fileContentArr.push(fileContent);
+      } catch (e) {
+        if (e.message === 'Unexpected end of JSON input') {
+          return ('invalid json');
+        } else {
+            return 'malformed json';
+        }   
+      }
+    }
+    return this.fileContentArr;
   }
   
   /**
@@ -49,49 +57,93 @@ export default class invertedIndex {
   }
 
   /**
+  * Creates an object with string keys and array values
+  * @return an object with string keys and array of integer values
+  * @param {array} an array of array
+  */
+  createIndexObj(uniqueWordsArr) {
+    let indexObj = {};
+    for (let s = 0; s < uniqueWordsArr.length; s += 1) {
+       for (let p = 0; p < uniqueWordsArr[s].length; p += 1) {
+          if (indexObj[uniqueWordsArr[s][p]]) {
+            indexObj[uniqueWordsArr[s][p]].push(s);
+          } else {
+            indexObj[uniqueWordsArr[s][p]] = [s];
+          }
+       }
+    }
+    return indexObj;
+  }
+
+  /**
+  * Creates an array of arrays of all the words for each document containing title and text
+  * @returns an array of array of all words for each document
+  * @param {array} an array of the title
+  * @param {array} an array of the text
+  * @param {array} a valid json document from the file
+  */
+  wordsFileDoc(titleArr, textArr, jsonDoc) {
+    let docContent = [];
+    let wordsPerDoc = [];
+    for (let k = 0; k < jsonDoc.length; k += 1) {
+      docContent = titleArr[k] + ' ' + textArr[k];
+      docContent = docContent.split(' ');
+      wordsPerDoc.push(docContent);
+    }
+    return wordsPerDoc;
+  }
+  
+  /**
+  * Creates unique words array from an array of words with duplicate words
+  * @return {array} an array of array of unique words
+  * @param {array} an array of arrays
+  */
+  uniqueWordsPerDoc(wordsDoc) {
+    let uniqueWords = [];
+    let words = [];
+    for (let q = 0; q < wordsDoc.length; q += 1) {
+      for (let x = 0; x < wordsDoc[q].length; x += 1) {
+        wordsDoc[q][x] = wordsDoc[q][x].replace(/([^\w]+)/g, '').toLowerCase();
+        this.addUniqueWords(wordsDoc[q][x], words);
+      }
+      if (words.length > 0) {
+        uniqueWords.push(words);
+      }   
+      words = []; 
+    } 
+    return uniqueWords;
+  }
+
+  /**
   * Creates a index object from a given JSON array
   * @return {object} an index object
   */
   createIndex() {
-    const arrOfTitle = [];
-    const arrOfText = [];
-    const indexNumber= [];
-    const allUniqueWords = [];
-    const jsonData = this.getJson();
+    let arrOfTitle = [];
+    let arrOfText = [];
     let indexObj = {};
-    let index = {};    
+    let index = {}; 
 
-    // Group title and text in all documents into separate arrays
-    for (let i = 0; i < jsonData.length; i++) {
-      arrOfTitle.push(jsonData[i].title);
-      arrOfText.push(jsonData[i].text);
-      indexNumber.push(i);
-    }
+    const mydata = this.getJson();
+    for (let n = 0; n < mydata.length; n += 1) {
+      let jsonData = mydata[n]
+      let fileName = this.fileName[n];
 
-    // Create array collection of unique word tokens for each document
-    for (let k = 0; k < jsonData.length; k += 1) {
-      let docContent = [];
-      docContent = arrOfTitle[k] + ' ' + arrOfText[k];
-      docContent = docContent.split(' ');
-      const uniqueWordsArr = [];
-      for (let q = 0; q < docContent.length; q += 1) {
-        docContent[q] = docContent[q].replace(/([^\w]+)/g, '').toLowerCase();
-        this.addUniqueWords(docContent[q], uniqueWordsArr);
+      // Group title and text in all documents into separate arrays
+      for (let i = 0; i < jsonData.length; i += 1) {
+        arrOfTitle.push(jsonData[i].title);
+        arrOfText.push(jsonData[i].text);
       }
-      allUniqueWords.push(uniqueWordsArr);
-   }
-    
-    // Create index object
-    for (let s = 0; s < allUniqueWords.length; s += 1) { 
-      for(let p = 0; p < allUniqueWords[s].length; p += 1) {
-        if (allUniqueWords[s][p] in indexObj) {
-          indexObj[allUniqueWords[s][p]].push(s);
-        } else {
-            indexObj[allUniqueWords[s][p]] = [s];
-        }       
-      }
-    }
-    index[this.fileName] = indexObj;
+
+      // Create array collection of unique word tokens for each document
+      let allWords = this.wordsFileDoc(arrOfTitle, arrOfText, jsonData);
+      let uniqueWords = this.uniqueWordsPerDoc(allWords);  
+      // Create index object
+      indexObj = this.createIndexObj(uniqueWords);
+      index[fileName] = indexObj;
+      arrOfTitle = [];
+      arrOfText = [];
+    }   
     return index;
   }
   
@@ -103,7 +155,6 @@ export default class invertedIndex {
     const searchResult = {};
     const newNum = [];
     let word = '';
-    let searcTerms = {};
     let indexNum = [];
     let indexObj = this.createIndex();
     let indexarr;
@@ -134,12 +185,13 @@ export default class invertedIndex {
     }
     // Remove trailing spaces
     word = word.split('').slice(0, word.length-1).join('');
+    // Remove any character not a digit
+    indexNum = indexNum.replace(/([^\d]+)/g, '').split('');
     // Collect unique index numbers in array
-    indexNum = indexNum.split('');
-    for (let z = 0; z < indexNum.length; z += 1) {
+    for (var z = 0; z < indexNum.length; z += 1) {
       indexNum[z] = parseInt(indexNum[z]);
       this.addUniqueWords(indexNum[z], newNum);
-    }    
+    }   
     searchResult[word] = newNum;
     return searchResult;
   }
