@@ -31,11 +31,7 @@ export default class invertedIndex {
         let fileContent = JSON.parse(fs.readFileSync(`fixtures/${this.fileName[i]}`));
         this.fileContentArr.push(fileContent);
       } catch (e) {
-        if (e.message === 'Unexpected end of JSON input') {
-          return ('invalid json');
-        } else {
-            return 'malformed json';
-        }   
+        return 'malformed json';   
       }
     }
     return { fileContentArr: this.fileContentArr, fileName: this.fileName };

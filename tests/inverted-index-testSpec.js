@@ -11,8 +11,8 @@ const multipleFiles = new myApp(['book.json', 'bookone.json']);
 
 describe('Inverted index class', () => {
   describe('Read book data', () => {
-    it("Should return 'invalid json' for fileContent = ''", () => {
-      expect(invalidJson.getJson()).toEqual('invalid json');
+    it("Should return 'malformed json' for fileContent = ''", () => {
+      expect(invalidJson.getJson()).toEqual('malformed json');
     });
 
     it("Should return '[{}]' for fileContent = '[{}]'", () => {

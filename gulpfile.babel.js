@@ -55,7 +55,6 @@ gulp.task('coveralls', ['test'], () => {
   if (!process.env.CI) {
     return;
   }
-
   return gulp.src('server.js')
     .pipe(coveralls())
 });
