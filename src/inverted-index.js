@@ -38,7 +38,7 @@ export default class invertedIndex {
         }   
       }
     }
-    return this.fileContentArr;
+    return { fileContentArr: this.fileContentArr, fileName: this.fileName };
   }
   
   /**
@@ -123,11 +123,12 @@ export default class invertedIndex {
     let arrOfText = [];
     let indexObj = {};
     let index = {}; 
-
-    const mydata = this.getJson();
+    const mydata = this.getJson().fileContentArr;
+    let fileName = this.getJson().fileName;
+    //console.log(fileName);
     for (let n = 0; n < mydata.length; n += 1) {
       let jsonData = mydata[n]
-      let fileName = this.fileName[n];
+      //let fileName = this.fileName[n];
 
       // Group title and text in all documents into separate arrays
       for (let i = 0; i < jsonData.length; i += 1) {
@@ -140,11 +141,15 @@ export default class invertedIndex {
       let uniqueWords = this.uniqueWordsPerDoc(allWords);  
       // Create index object
       indexObj = this.createIndexObj(uniqueWords);
-      index[fileName] = indexObj;
+      index[fileName[n]] = indexObj;
       arrOfTitle = [];
       arrOfText = [];
-    }   
-    return index;
+    } 
+    let newIndex = {}
+    for (let s = 0; s < fileName.length; s += 1) {
+      newIndex[fileName[s]] = index[fileName[s]];
+    }  
+    return newIndex;
   }
   
   /**

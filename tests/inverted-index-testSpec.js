@@ -15,7 +15,7 @@ describe('Inverted index class', () => {
     });
 
     it("Should return '[{}]' for fileContent = '[{}]'", () => {
-      expect(emptyJson.getJson()).toEqual([{}]);
+      expect(emptyJson.getJson().fileContentArr[0]).toEqual([{}]);
     });
 
     it('Should return "malformed json" for fileContent ="Hello world!"', () => {
@@ -27,7 +27,7 @@ describe('Inverted index class', () => {
     });
 
     it("Should return a valid file content with the format [{ 'title': 'A', 'text': 'B' }]", () => {
-      expect(jsonOfFile.getJson()).toEqual([
+      expect(jsonOfFile.getJson().fileContentArr[0]).toEqual([
         {
           "title":"An inquiry into the wealth of nations",
 
