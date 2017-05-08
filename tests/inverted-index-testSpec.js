@@ -7,6 +7,7 @@ const invalidJson = new myApp('invalid.json');
 const malformedJson = new myApp('malformed.json');
 const malformed1Json = new myApp('malformed1.json');
 const validJson = new myApp('bookone.json');
+const multipleFiles = new myApp(['book.json', 'bookone.json']);
 
 describe('Inverted index class', () => {
   describe('Read book data', () => {
@@ -116,7 +117,45 @@ describe('Inverted index class', () => {
            man: [1]
         });
       });
-  });
+
+    it('Should return valid output for multiple files', () => {
+      expect(multipleFiles.createIndex()).toEqual(
+        { 'book.json': 
+          { an: [ 0 ],
+            inquiry: [ 0 ],
+            into: [ 0 ],
+            the: [ 0, 1 ],
+            wealth: [ 0 ],
+            of: [ 0 ],
+            nations: [ 0 ],
+            this: [ 0, 1 ],
+            string: [ 0, 1 ],
+            seeks: [ 0 ],
+            to: [ 0, 1 ],
+            help: [ 0, 1 ],
+            you: [ 0, 1 ],
+            understand: [ 0, 1 ],
+            problem: [ 0, 1 ],
+            set: [ 0, 1 ],
+            from: [ 1 ],
+            third: [ 1 ],
+            world: [ 1 ],
+            first: [ 1 ],
+            is: [ 1 ],
+            also: [ 1 ] },
+          'bookone.json': 
+            { what: [ 0 ],
+              who: [ 0 ],
+              gave: [ 0 ],
+              you: [ 0 ],
+              that: [ 0 ],
+              planet: [ 1 ],
+              crypton: [ 1 ],
+              super: [ 1 ],
+              man: [ 1 ] } 
+            });
+          });
+        });
 
   describe('Search index', () => {
     it("Should return 'object' for typeof jsonOfFile.createIndex(fileName, fileContent)", () => {
