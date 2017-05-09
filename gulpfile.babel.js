@@ -55,6 +55,6 @@ gulp.task('coveralls', () => {
   if (!process.env.CI) {
     return;
   }
-  return gulp.src('src/inverted-index.js')
+  return gulp.src('/lcov.info')
     .pipe(coveralls())
 });
