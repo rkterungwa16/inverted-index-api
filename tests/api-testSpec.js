@@ -47,6 +47,7 @@ describe('Api test', () => {
      world: [ 1 ],
      first: [ 1 ],
      is: [ 1 ],
-     also: [ 1 ] } }, done);
+     also: [ 1 ] } }, done)
+    .end(done);
   })
 });
