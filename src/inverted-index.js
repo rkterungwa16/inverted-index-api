@@ -121,17 +121,14 @@ export default class invertedIndex {
     let index = {}; 
     const mydata = this.getJson().fileContentArr;
     let fileName = this.getJson().fileName;
-    //console.log(fileName);
+    // Create index object for each individual file
     for (let n = 0; n < mydata.length; n += 1) {
-      let jsonData = mydata[n]
-      //let fileName = this.fileName[n];
-
+      let jsonData = mydata[n];
       // Group title and text in all documents into separate arrays
       for (let i = 0; i < jsonData.length; i += 1) {
         arrOfTitle.push(jsonData[i].title);
         arrOfText.push(jsonData[i].text);
       }
-
       // Create array collection of unique word tokens for each document
       let allWords = this.wordsFileDoc(arrOfTitle, arrOfText, jsonData);
       let uniqueWords = this.uniqueWordsPerDoc(allWords);  
@@ -159,13 +156,26 @@ export default class invertedIndex {
     let indexNum = [];
     let indexObj = this.createIndex();
     let indexarr;
-    if (arguments.length > 1) {
+    let file = '';
+    let searchObj = {};
+    let fileName = [];
+    let test = /[.json]/.test(arguments[0]);
+    if (arguments.length === 2 && test) {
+      if (Array.isArray(arguments[1])) {
+        indexarr = arguments[1];
+      } else if (typeof arguments[1] === 'string') {
+        indexarr = arguments[1].split(' ');
+      }
+      fileName = arguments[0].split(' ');
+    } else if (arguments.length > 1 ) {
       indexarr = arguments;
-    }
-    else if (Array.isArray(terms)) {
-      indexarr = terms;
-    } else if (typeof terms === 'string') {
-      indexarr = terms.split(' ');
+      fileName = this.getJson().fileName;
+    } else if (arguments.length === 1 && Array.isArray(terms)) {
+      indexarr = arguments[0];
+      fileName = this.getJson().fileName;
+    } else if (arguments.length === 1 && typeof terms === 'string') {
+      indexarr = arguments[0].split(' ');
+      fileName = this.getJson().fileName;
     } else {
       return 'invalid search term';
     }
@@ -173,19 +183,22 @@ export default class invertedIndex {
     for (let s = 0; s < indexarr.length; s += 1) {
       // Remove any character not alphanumeric
       indexarr[s] = indexarr[s].replace(/([^\w]+)/g, '').toLowerCase();
-      // Collect words and index number
-      if (indexarr[s] in indexObj[this.fileName]) {
-        word = word + indexarr[s] + ' ';
-        indexNum = indexNum + indexObj[this.fileName][indexarr[s]];
-      } else {
-        continue;
-      }
+      // Collect words and index number      
+      for (let k = 0; k < fileName.length; k += 1) {
+        if (indexarr[s] in indexObj[fileName[k]]) {
+          word = word + indexarr[s] + ' ';
+          indexNum = indexNum + indexObj[fileName[k]][indexarr[s]];
+          file = fileName[k];
+        } else {
+          continue;
+        }
+      }     
     }
     if (indexNum.length === 0) {
       return 'Search term(s) is not in document';
     }
     // Remove trailing spaces
-    word = word.split('').slice(0, word.length-1).join('');
+    word = word.split('').slice(0, word.length - 1).join('');
     // Remove any character not a digit
     indexNum = indexNum.replace(/([^\d]+)/g, '').split('');
     // Collect unique index numbers in array
@@ -194,6 +207,7 @@ export default class invertedIndex {
       this.addUniqueWords(indexNum[z], newNum);
     }   
     searchResult[word] = newNum;
-    return searchResult;
+    searchObj[file] = searchResult;
+    return searchObj;
   }
 }

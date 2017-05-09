@@ -3,17 +3,17 @@ import req from 'supertest';
 
 const request = req(myApp);
 
-describe('Sample unit test', () => {
+describe('Api test', () => {
   it('should return a valid json', (done) => {
     request
     .post('/api/searchIndex')
     .expect('Content-Type', 'application/json', done);
   });
 
-  it('Should return { "third world": [ 1 ] }', (done) => {
+  it('Should return { "book.json": { "an world": [ 0, 1 ] } }', (done) => {
   	request
   	.post('/api/searchIndex')
-  	.expect({ 'an world': [ 0, 1 ] }, done);
+  	.expect({ 'book.json': { 'an world': [ 0, 1 ] } }, done);
   });
 
   it('Should return a valid json', (done) => {
