@@ -13,8 +13,8 @@
 
 ### Back End Dependencies
 *  This app's functionality depends on multiple Python packages including;
-  *  **[Node.js](http://nodejs.org/download/)** - This framework helps in creating...
-  *  **[Dotenv](https://github.com/motdotla/dotenv)** - This tool helps in...
+  *  **[Node.js](http://nodejs.org/download/)** - The application is written in this server-side JavaScript environment.
+  *  **[Dotenv](https://github.com/motdotla/dotenv)** - Loads environment variables from a .env file into process.env. 
 
 ## Front End Dependencies
 
@@ -47,5 +47,3 @@
 *  They are run using the **`coverage`** tool in order to generate test coverage reports.
 *  To run the tests
    * `gulp run-tests`
-
-
