@@ -201,5 +201,9 @@ describe('Inverted index class', () => {
     it('Should return "Search terms(s) is not in document for empty json"', () => {
       expect(emptyJson.searchIndex('empty.json', 'is')).toEqual('Search term(s) is not in document');
     });
+
+    it('Should search through all indexed files if filename is not passed', () => {
+      expect(multipleFiles.searchIndex('what')).toEqual({ 'bookone.json': { 'what': [ 0 ] } });
+    });
   });
 });
