@@ -5,12 +5,11 @@
 
 ## Introduction
 *  **`inverted-index-api`** is an App powered by Node.js.
-*  It has the following features;
-  *  Can create an index of words with the document and file location
+*  It has the following features:
+  *  Can create an index of words with the document and file location.
+  *  Can Search for words in documents and files.
 
 ## Dependencies
-
-### Back End Dependencies
 *  This app's functionality depends on multiple Python packages including;
   *  **[Node.js](http://nodejs.org/download/)** - The application is written in this server-side JavaScript environment.
   *  **[Dotenv](https://github.com/motdotla/dotenv)** - Loads environment variables from a .env file into process.env. 
@@ -34,9 +33,6 @@
 `
 * Run the app
   *  `npm start`
-
-  ```
-  ```
 
 ## Tests
 *  The tests have been written using **[Jasmine-node](https://github.com/mhevery/jasmine-node/)**.
