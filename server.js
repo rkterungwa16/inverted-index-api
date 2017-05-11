@@ -1,7 +1,5 @@
-import http from 'http';
 import dotenv from 'dotenv';
 import fs from 'fs';
-import url from 'url';
 import multer from 'multer';
 import express from 'express';
 import bodyParser from 'body-parser';
