@@ -36,6 +36,24 @@ export default class invertedIndex {
     }
     return { fileContentArr: this.fileContentArr, fileName: this.fileName };
   }
+
+  getMulterJson(arrayOfFileObjects) {
+    const fileName = [];
+    const filePath = [];
+    for (let i = 0; i < arrayOfFileObjects.length; i++) {
+      fileName.push(arrayOfFileObjects[i].originalname);
+      filePath.push(arrayOfFileObjects[i].path);
+    }
+    for (let i = 0; i < fileName.length; i++) {
+      try {
+        let fileContent = JSON.parse(fs.readFileSync(filePath[i]));
+        this.fileContentArr.push(fileContent);
+      } catch(e) {
+        return 'invalid json'; 
+      }     
+    }
+    return { fileContentArr: this.fileContentArr, fileName: fileName };
+  }
   
   /**
   * Adds words not already in the array
@@ -114,13 +132,13 @@ export default class invertedIndex {
   * Creates a index object from a given JSON array
   * @return {object} an index object
   */
-  createIndex() {
+  createIndex(filename, filecontentArr) {
     let arrOfTitle = [];
     let arrOfText = [];
     let indexObj = {};
     let index = {}; 
-    const mydata = this.getJson().fileContentArr;
-    let fileName = this.getJson().fileName;
+    const mydata = filecontentArr;
+    let fileName = filename;
     // Create index object for each individual file
     for (let n = 0; n < mydata.length; n += 1) {
       let jsonData = mydata[n];
@@ -147,34 +165,45 @@ export default class invertedIndex {
   
   /**
   * Searches an index object with search terms
-  * @returns {object} an object of the search results
+  * @returns {object} an object of the search results index fileName terms
   */
-  searchIndex(terms) {
+  searchIndex(createdIndex, terms) {
     const searchResult = {};
     const newNum = [];
     let word = '';
     let indexNum = [];
-    let indexObj = this.createIndex();
-    let indexarr;
+    let indexObj = createdIndex;
+    let indexarr = [];
     let file = '';
     let searchObj = {};
     let fileName = [];
-    let test = /[.json]/.test(arguments[0]);
-    if (arguments.length === 2 && test) {
-      if (Array.isArray(arguments[1])) {
-        indexarr = arguments[1];
-      } else if (typeof arguments[1] === 'string') {
-        indexarr = arguments[1].split(' ');
+    let argArray = [];
+    let test = /[.json]/.test(arguments[1]);
+    if (arguments.length === 3 && test) {
+      if (Array.isArray(arguments[2])) {
+        indexarr = arguments[2];
+      } else if (typeof arguments[2] === 'string') {
+        indexarr.push(arguments[2]);
       }
-      fileName = arguments[0].split(' ');
-    } else if (arguments.length > 1 ) {
-      indexarr = arguments;
+      fileName.push(arguments[1]);
+    } else if (arguments.length > 3 && test) {
+      for (let u = 0; u < arguments.length; u += 1) {
+          argArray.push(arguments[u])
+      }
+      argArray.splice(0, 2);
+      indexarr = argArray;
+    } else if (arguments.length > 2 && !test) {
+        for (let z = 0; z < arguments.length; z += 1) {
+          argArray.push(arguments[z])
+        }
+        argArray.splice(0, 1);
+        indexarr = argArray;
+        fileName = this.getJson().fileName;
+    } else if (arguments.length === 2 && Array.isArray(terms)) {
+      indexarr = arguments[1];
       fileName = this.getJson().fileName;
-    } else if (arguments.length === 1 && Array.isArray(terms)) {
-      indexarr = arguments[0];
-      fileName = this.getJson().fileName;
-    } else if (arguments.length === 1 && typeof terms === 'string') {
-      indexarr = arguments[0].split(' ');
+    } else if (arguments.length === 2 && typeof terms === 'string') {
+      indexarr = arguments[1].split(' ');
       fileName = this.getJson().fileName;
     } else {
       return 'invalid search term';
