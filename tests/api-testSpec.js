@@ -3,29 +3,29 @@ import req from 'supertest';
 
 const request = req(myApp);
 
-describe('Api test', () => {
+describe('Should return a valid content-type', () => {
   it('should return a valid json', (done) => {
     request
     .post('/api/searchIndex')
-    .expect('Content-Type', 'application/json', done);
+    .expect('Content-Type', 'application/json; charset=utf-8', done);
   });
 
-  it('Should return { "book.json": { "an world": [ 0, 1 ] } }', (done) => {
-  	request
-  	.post('/api/searchIndex')
-  	.expect({ 'book.json': { 'an world': [ 0, 1 ] } }, done);
+  it('Should respond with an object', (done) => {
+    request
+    .post('/api/createIndex')
+    .attach('files', './fixtures/book.json')
+    .end((err, res) => {
+      expect(typeof res.body).toEqual('object');
+      done();
+    });
   });
 
-  it('Should return a valid json', (done) => {
-  	request
-  	.post('/api/createIndex')
-  	.expect('Content-Type', 'application/json', done);
-  });
-
-  it('Should return valid index object', (done) => {
-  	request
-  	.post('/api/createIndex')
-  	.expect({ 'book.json': 
+  it('Should respon with a valid index object', (done) => {
+    request
+    .post('/api/createIndex')
+    .attach('files', './fixtures/book.json')
+    .end((err, res) => {
+      expect(res.body).toEqual({ 'book.json': 
    { an: [ 0 ],
      inquiry: [ 0 ],
      into: [ 0 ],
@@ -47,7 +47,32 @@ describe('Api test', () => {
      world: [ 1 ],
      first: [ 1 ],
      is: [ 1 ],
-     also: [ 1 ] } }, done)
-    .end(done);
-  })
+     also: [ 1 ] } });
+      done();
+    });
+  });
+
+  // it('Should return { "book.json": { "an world": [ 0, 1 ] } }', (done) => {
+  // 	request
+  // 	.post('/api/searchIndex')
+  //   .attach('files', './fixtures/book.json')
+  //   .send({ terms: ['an', 'world'], filename: ['book.json'] })
+  // 	.expect({ 'book.json': { 'an world': [ 0, 1 ] } }, done);
+  // });
+
+  it('respond', (done) => {
+    request
+    .post('/api/createIndex')
+    .attach('files', './fixtures/book.json')
+    .end((err, res) => {
+      expect(res.status).toEqual(200);
+      done(err);
+    });
+  });
+
+  // it('Should return a valid json', (done) => {
+  // 	request
+  // 	.post('/api/createIndex')
+  // 	.expect('Content-Type', 'application/json; charset=utf-8', done);
+  // });
 });

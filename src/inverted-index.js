@@ -36,7 +36,12 @@ export default class invertedIndex {
     }
     return { fileContentArr: this.fileContentArr, fileName: this.fileName };
   }
-
+  
+  /**
+  * Collects originalname and path properties from multer object
+  * @return { object } a object of filename and filecontent
+  * @param { array }
+  */
   getMulterJson(arrayOfFileObjects) {
     const fileName = [];
     const filePath = [];

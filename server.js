@@ -28,7 +28,6 @@ const upload = multer({ storage: storage });
 
 let index;
 const router = express.Router();
-const indexInstance = new myApp('book.json');
 app.use('/api', router);
 
 router.post('/createIndex', upload.array('files'), (req, res) => {
@@ -45,7 +44,7 @@ router.post('/searchIndex', (req, res) => {
   const term = req.body.terms;
   res.status(200).json(app.searchIndex(index, fileName, term))
 });
- 
+
 app.listen(process.env.PORT_DEV, () => {
   console.log('Server listening on', process.env.PORT_DEV);
 });
