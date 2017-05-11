@@ -60,7 +60,7 @@ describe('Should return a valid content-type', () => {
   // 	.expect({ 'book.json': { 'an world': [ 0, 1 ] } }, done);
   // });
 
-  it('respond', (done) => {
+  it('Should respond with a 200 status', (done) => {
     request
     .post('/api/createIndex')
     .attach('files', './fixtures/book.json')
@@ -70,9 +70,21 @@ describe('Should return a valid content-type', () => {
     });
   });
 
-  // it('Should return a valid json', (done) => {
-  // 	request
-  // 	.post('/api/createIndex')
-  // 	.expect('Content-Type', 'application/json; charset=utf-8', done);
-  // });
+  it ('Should respond with a valid search result', (done) => {
+    request
+    .post('/api/createIndex')
+    .attach('files', './fixtures/book.json')
+    .end(() => {
+      request
+      .post('/api/searchIndex')
+      .send({
+        terms: ['an', 'world'],
+        filename: ['book.json']
+      })
+      .end((err, res) => {
+        expect(res.status).toEqual(200);
+        done(err);
+      });
+    });
+  });
 });
