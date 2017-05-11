@@ -5,18 +5,14 @@
 
 ## Introduction
 *  **`inverted-index-api`** is an App powered by Node.js.
-*  It has the following features;
-  *  None yet
-*  Click [here](http://index-app.herokuapp.com/) to access the app on Heroku
+*  It has the following features:
+  *  Can create an index of words with the document and file location.
+  *  Can Search for words in documents and files.
 
 ## Dependencies
-
-### Back End Dependencies
 *  This app's functionality depends on multiple Python packages including;
-  *  **[Node.js](http://nodejs.org/download/)** - This framework helps in creating...
-  *  **[Dotenv](https://github.com/motdotla/dotenv)** - This tool helps in...
-
-## Front End Dependencies
+  *  **[Node.js](http://nodejs.org/download/)** - The application is written in this server-side JavaScript environment.
+  *  **[Dotenv](https://github.com/motdotla/dotenv)** - Loads environment variables from a .env file into process.env. 
 
 ## Installation and setup
 *  Navigate to a directory of choice on `terminal`.
@@ -36,16 +32,10 @@
 *  Install the app's front end dependencies using ..
 `
 * Run the app
-  *  `gulp serve`
-  *  Running the command above will produce output that's similar to the sample below.
-
-  ```
-  ```
+  *  `npm start`
 
 ## Tests
 *  The tests have been written using **[Jasmine-node](https://github.com/mhevery/jasmine-node/)**.
 *  They are run using the **`coverage`** tool in order to generate test coverage reports.
 *  To run the tests
-   * `gulp run-tests`
-
-
+   * `npm test`
