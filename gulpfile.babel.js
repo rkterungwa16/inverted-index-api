@@ -17,7 +17,7 @@ gulp.task('serve', () =>
     script: 'index.js',
     ext: 'js html', 
     env: { 'NODE_ENV': process.env.NODE_ENV }
-  })
+  });
 );
 
 // Generate coverage report
@@ -35,11 +35,11 @@ gulp.task('run-tests', () => {
 
 // Generate coverage report
 gulp.task('coverage', (cb) => {
-  gulp.src('src/inverted-index.js')
+  gulp.src(['src/inverted-index.js', 'server.js'])
     .pipe(istanbul())
     .pipe(istanbul.hookRequire())
     .on('finish', () => {
-      gulp.src('tests/inverted-index-testSpec.js')
+      gulp.src('tests/*.js')
       .pipe(babel())
       .pipe(injectModules())
       .pipe(jasmineNode())
