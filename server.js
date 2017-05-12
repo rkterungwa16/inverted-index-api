@@ -1,11 +1,10 @@
 import dotenv from 'dotenv';
-import fs from 'fs';
 import multer from 'multer';
 import express from 'express';
 import bodyParser from 'body-parser';
 import myApp from './src/inverted-index';
 
-let app = express();
+const app = express();
 
 dotenv.config({ path: '.env.example' });
 
@@ -28,19 +27,21 @@ let index;
 const router = express.Router();
 app.use('/api', router);
 
+// Create index from a json
 router.post('/createIndex', upload.array('files'), (req, res) => {
-  const app = new myApp; 
+  const mapp = new myApp();
   const files = req.files;
-  const fileSpec = app.getMulterJson(files);
-  index = app.createIndex(fileSpec.fileName, fileSpec.fileContentArr);
-  res.status(200).json(index);    
+  const fileSpec = mapp.getMulterJson(files);
+  index = mapp.createIndex(fileSpec.fileName, fileSpec.fileContentArr);
+  res.status(200).json(index);
 });
 
+// Search index for created index
 router.post('/searchIndex', (req, res) => {
-  const app = new myApp;
+  const mapp = new myApp();
   const fileName = req.body.filename;
   const term = req.body.terms;
-  res.status(200).json(app.searchIndex(index, fileName, term))
+  res.status(200).json(mapp.searchIndex(index, fileName, term));
 });
 
 app.listen(process.env.PORT_DEV, () => {
