@@ -17,14 +17,15 @@ gulp.task('serve', () =>
     script: 'index.js',
     ext: 'js html', 
     env: { 'NODE_ENV': process.env.NODE_ENV }
-  })
+  });
 );
 
 // Generate coverage report
-gulp.task('test', () => 
-  gulp.src('./coverage/coverage.json')
-    .pipe(istanbulReport())
-);
+gulp.task('test', () => {
+  gulp.src('./tests/api-testSpec.js')
+    .pipe(babel())
+    .pipe(jasmineNode())
+});
 
 // Run tests 
 gulp.task('run-tests', () => {
@@ -34,27 +35,26 @@ gulp.task('run-tests', () => {
 
 // Generate coverage report
 gulp.task('coverage', (cb) => {
-  gulp.src('src/inverted-index.js')
+  gulp.src(['src/inverted-index.js', 'server.js'])
     .pipe(istanbul())
     .pipe(istanbul.hookRequire())
     .on('finish', () => {
-      gulp.src('tests/inverted-index-testSpec.js')
+      gulp.src('tests/*.js')
       .pipe(babel())
       .pipe(injectModules())
       .pipe(jasmineNode())
       .pipe(istanbul.writeReports())
-      .pipe(istanbul.enforceThresholds({ thresholds: { global: 90 } }))
+      .pipe(istanbul.enforceThresholds({ thresholds: { global: 70 } }))
       .on('end', cb);
     })
 });
 
 // Load code coverage to coveralls
-gulp.task('coveralls', ['test'], () => {
+gulp.task('coveralls', () => {
   // If not running on CI environment it won't send lcov.info to coveralls
   if (!process.env.CI) {
     return;
   }
-
-  return gulp.src('coverage/lcov.info')
+  return gulp.src('/lcov.info')
     .pipe(coveralls())
 });

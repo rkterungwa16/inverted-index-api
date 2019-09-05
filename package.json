@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "gulp serve",
-    "test": "gulp run-tests && gulp coveralls && gulp coverage"
+    "test": "gulp coverage"
   },
   "repository": {
     "type": "git",
@@ -22,8 +22,11 @@
   "homepage": "https://github.com/rkterungwa16/inverted-index-api#readme",
   "dependencies": {
     "babel-register": "^6.24.1",
+    "body-parser": "^1.17.1",
     "coveralls": "^2.13.0",
-    "dotenv": "^4.0.0"
+    "dotenv": "^4.0.0",
+    "express": "^4.15.2",
+    "supertest": "^3.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -45,7 +48,6 @@
     "gulp-istanbul-report": "0.0.1",
     "gulp-jasmine-node": "^1.0.7",
     "gulp-nodemon": "^2.2.1",
-    "jasmine": "^2.6.0",
-    "supertest": "^3.0.0"
+    "jasmine": "^2.6.0"
   }
 }
