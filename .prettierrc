@@ -1,0 +1,16 @@
+{
+    "printWidth": 140,
+    "useTabs": false,
+    "trailingComma": "all",
+    "singleQuote": false,
+    "semi": true,
+    "overrides": [
+      {
+        "files": "*.ejs",
+        "options": {
+            "parser":"vue",
+            "useTabs": true
+        }
+      }
+    ]
+}

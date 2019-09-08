@@ -1,41 +1,80 @@
-# Inverted-Index-Api
+# Inverted Index Rest Api
+Inverted Index Rest Api Example. Using Node.js, Express.
 
 [![Build Status](https://travis-ci.org/rkterungwa16/inverted-index-api.svg?branch=project-setup)](https://travis-ci.org/rkterungwa16/inverted-index-api.svg?branch=project-setup)
 [![Coverage Status](https://coveralls.io/repos/github/rkterungwa16/inverted-index-api/badge.svg?branch=project-setup)](https://coveralls.io/github/rkterungwa16/inverted-index-api?branch=project-setup)
+[![Maintainability](https://api.codeclimate.com/v1/badges/8a1735b0b7bfbe7203f3/maintainability)](https://codeclimate.com/github/rkterungwa16/inverted-index-api/maintainability)
 
-## Introduction
-*  **`inverted-index-api`** is an App powered by Node.js.
-*  It has the following features:
-  *  Can create an index of words with the document and file location.
-  *  Can Search for words in documents and files.
 
-## Dependencies
-*  This app's functionality depends on multiple Python packages including;
-  *  **[Node.js](http://nodejs.org/download/)** - The application is written in this server-side JavaScript environment.
-  *  **[Dotenv](https://github.com/motdotla/dotenv)** - Loads environment variables from a .env file into process.env. 
+## Requirements
 
-## Installation and setup
-*  Navigate to a directory of choice on `terminal`.
-*  Clone this repository on that directory.
-  *  Using SSH;
+ - [Node v10.15+](https://nodejs.org/en/download/current/)
 
-    >`git@github.com:rkterungwa16/inverted-index-api.git`
+## Getting Started
 
-  *  Using HTTP;
+Clone the repo:
 
-    >`https://github.com/rkterungwa16/inverted-index-api.git`
+```bash
+git clone https://github.com/rkterungwa16/inverted-index-api.git
+cd inverted-index-api
+```
 
-*  Navigate to the repo's folder on your computer
-  *  `cd inverted-index-api/`
-*  Install the app's backend dependencies.
-  *  `npm install`
-*  Install the app's front end dependencies using ..
-`
-* Run the app
-  *  `npm start`
+Install dependencies:
+```bash
+npm i
+```
 
-## Tests
-*  The tests have been written using **[Jasmine-node](https://github.com/mhevery/jasmine-node/)**.
-*  They are run using the **`coverage`** tool in order to generate test coverage reports.
-*  To run the tests
-   * `npm test`
+Set environment variables:
+
+```bash
+cp .env.example .env
+```
+
+## Code Formatter
+
+```bash
+# format code using prettier
+npm run format
+```
+
+## Code Lint
+```bash
+# lint code with TSLint
+npm run lint
+```
+```bash
+# try to fix TSLint errors
+npm run fix:lint
+```
+
+## Running Locally
+
+```bash
+npm run start:dev
+```
+
+## Running in Production
+
+```bash
+npm start
+```
+
+## Testing Locally...
+
+### Create Index
+```bash
+curl -X POST \
+http://localhost:3300/api/v1/create-index \
+    -H 'cache-control: no-cache' \
+    -H 'content-type: multipart/form-data' \
+    -F 'booksCollectionName=Food -F texts=@book.json'
+```
+
+### Search for words in books Collection
+```bash
+curl -X POST\
+http://localhost:3300/api/v1/search \
+    -H 'cache-control: no-cache' \
+    -H 'content-type: application/json' \
+    -d '{"booksCollectionName":"value1", "serchTerm":"value2"}'
+```
