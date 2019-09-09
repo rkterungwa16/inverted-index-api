@@ -30,6 +30,7 @@ export interface IFileService {
     writeIntoFile(fileDescriptor: number, stringData: string): Promise<boolean>;
     create(fileName: string, data: string): Promise<boolean>;
     readIndexFile(fileName: string): Promise<string>;
+    delete(fileName: string): Promise<boolean>;
 }
 
 export interface IInvertedIndexService {

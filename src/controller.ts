@@ -1,4 +1,4 @@
-import { NextFunction, Response } from "express";
+import { Response } from "express";
 import { IMRequest } from "types";
 import { Inject } from "typescript-ioc";
 import { InvertedIndexService } from "./inverted-index.service";

@@ -1,8 +1,9 @@
 import fs from "fs";
 import path from "path";
 import { IFileService } from "./types";
+
 export class FileService implements IFileService {
-    private baseDir: string;
+    public baseDir: string;
     constructor() {
         this.baseDir = path.join(__dirname, "/../.data");
     }
@@ -70,6 +71,19 @@ export class FileService implements IFileService {
                     return resolve(indexValues);
                 }
                 return reject(new Error("Index not yet created for this collection"));
+            });
+        });
+    };
+
+    public delete = (fileName: string): Promise<boolean> => {
+        return new Promise((resolve, reject) => {
+            fs.unlink(`${this.baseDir}/${fileName}.json`, err => {
+                if (err) {
+                    const deleteUserError = new Error("Could not delete specified file");
+                    return reject(deleteUserError);
+                }
+
+                return resolve(true);
             });
         });
     };

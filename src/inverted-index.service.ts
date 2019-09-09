@@ -1,14 +1,16 @@
+import path from "path";
 import { Inject } from "typescript-ioc";
 import { FileService } from "./file.service";
-import { IBook, ICreatedIndex, IFileService, IInvertedIndexService } from "./types";
+import { IBook, ICreatedIndex, IInvertedIndexService } from "./types";
 export class InvertedIndexService implements IInvertedIndexService {
     @Inject
-    private fileService!: FileService;
+    public fileService!: FileService;
 
     public extractBookJsonFromFile = async (filePath: string, mimetype: string): Promise<string> => {
         if (mimetype !== "application/json") {
             throw new Error("Only json files allowed");
         }
+
         return (await this.fileService.readUploadedFile(filePath)) as string;
     };
 
