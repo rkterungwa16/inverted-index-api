@@ -43,12 +43,7 @@ export class FileService implements IFileService {
 
     public writeIntoFile = (fileDescriptor: number, stringData: string): Promise<boolean> => {
         return new Promise((resolve, reject) => {
-            fs.writeFile(fileDescriptor, stringData, err => {
-                if (err) {
-                    const writingIntoFileError = new Error();
-                    writingIntoFileError.message = "Error writing to new file";
-                    return reject(writingIntoFileError);
-                }
+            fs.writeFile(fileDescriptor, stringData, () => {
                 return resolve(true);
             });
         });

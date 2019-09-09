@@ -27,7 +27,7 @@ export class InvertedIndexService implements IInvertedIndexService {
             return book.text && book.title;
         });
 
-        if (!collectionIsValid) {
+        if (!books.length || !collectionIsValid) {
             throw new Error("All books in collection must have text and title");
         }
         return collectionIsValid;
@@ -70,7 +70,8 @@ export class InvertedIndexService implements IInvertedIndexService {
             const searchIndexItems = Object.keys(indexForCurrentBookCollection).filter(indexItem => {
                 return searchTerms.includes(indexItem);
             });
-            if (!searchIndexItems) {
+
+            if (!searchIndexItems.length) {
                 throw new Error("Book collections does not contain search items");
             }
             let searchResultValue = [] as number[];

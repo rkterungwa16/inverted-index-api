@@ -1,3 +1,6 @@
-[
-    {"title": "John doe", "text": "I came from the hospital"}
-]
+{
+    "the": [
+        0,
+        1
+    ]
+}

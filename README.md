@@ -1,8 +1,8 @@
 # Inverted Index Rest Api
 Inverted Index Rest Api Example. Using Node.js, Express.
 
-[![Build Status](https://travis-ci.org/rkterungwa16/inverted-index-api.svg?branch=project-setup)](https://travis-ci.org/rkterungwa16/inverted-index-api.svg?branch=project-setup)
-[![Coverage Status](https://coveralls.io/repos/github/rkterungwa16/inverted-index-api/badge.svg?branch=project-setup)](https://coveralls.io/github/rkterungwa16/inverted-index-api?branch=project-setup)
+[![Build Status](https://travis-ci.org/rkterungwa16/inverted-index-api.svg?branch=project-setup)](https://travis-ci.org/rkterungwa16/inverted-index-api.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/rkterungwa16/inverted-index-api/badge.svg)](https://coveralls.io/github/rkterungwa16/inverted-index-api)
 [![Maintainability](https://api.codeclimate.com/v1/badges/8a1735b0b7bfbe7203f3/maintainability)](https://codeclimate.com/github/rkterungwa16/inverted-index-api/maintainability)
 
 
@@ -45,6 +45,11 @@ npm run lint
 ```bash
 # try to fix TSLint errors
 npm run fix:lint
+```
+
+## Unit tests and Coverage
+```bash
+npm test
 ```
 
 ## Running Locally

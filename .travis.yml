@@ -1,7 +1,11 @@
 language: node_js
 node_js:
-  - "6"
-before_script:
-  - npm install -g istanbul
+  - '10'
+
+before_install:
+  - npm install -g npm
+  - npm --version
+
 after_success:
-  - gulp coveralls
+  - npm run coveralls
+  - npm run coverage-clean
