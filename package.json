@@ -41,7 +41,7 @@
     "cors": "^2.8.5",
     "cross-env": "^5.2.1",
     "dotenv": "^4.0.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "multer": "^1.4.2",
     "typescript": "^3.6.2",
     "typescript-ioc": "^1.2.5",
